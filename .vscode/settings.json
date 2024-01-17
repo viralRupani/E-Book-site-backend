@@ -1,0 +1,9 @@
+{
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "eslint.validate": ["typescript", "javascript"],
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }
+}
