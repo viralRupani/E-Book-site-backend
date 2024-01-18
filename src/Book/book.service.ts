@@ -73,4 +73,9 @@ export class BookService {
 
         return FoundCatalogue
     }
+
+    async searchallcatalogue() {
+        const Catalogue = await this.prisma.catalogue.findMany();
+        return Catalogue;
+    }
 }

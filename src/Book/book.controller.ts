@@ -57,6 +57,11 @@ export class BookController {
     async searchCatalogue(@Query('subject') subject: string) {
         return this.bookService.searchCatalogue(subject);
     }
+
+    @Get('subject/all')
+    async searchallcatalogue() {
+        return this.bookService.searchallcatalogue();
+    }
 }
 
 
