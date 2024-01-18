@@ -17,6 +17,7 @@ model User {
   Collage    String
   Dgree      String
   Sem        Int
+  Role       String
 }
 
 model Post {
