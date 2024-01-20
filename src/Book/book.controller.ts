@@ -7,6 +7,7 @@ import { CreatePostArgs } from './dto/create-post.args';
 import { authGuard } from 'src/auth/guard';
 import { prismaservice } from 'src/prisma/prisma.service';
 import { Subjectdto } from './dto/subject-find.dto';
+import { query } from 'express';
 
 const storage = diskStorage({
     destination: './uploads',
@@ -61,6 +62,19 @@ export class BookController {
     @Get('subject/all')
     async searchallcatalogue() {
         return this.bookService.searchallcatalogue();
+    }
+
+    @Get('find')
+    async searchCatalogueortitle(
+        @Query("subject") subject: string,
+        @Query("title") title: string
+    ) {
+        return this.bookService.searchCatalogueortitle(subject, title);
+    }
+
+    @Post("Catalogue")
+    async postcatalogue(@Body("Catalogue") Catalogue: string) {
+        return this.bookService.postcatalogue(Catalogue);
     }
 }
 

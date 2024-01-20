@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { prismaservice } from 'src/prisma/prisma.service';
 import { CreatePostArgs } from './dto/create-post.args';
 
@@ -77,5 +77,36 @@ export class BookService {
     async searchallcatalogue() {
         const Catalogue = await this.prisma.catalogue.findMany();
         return Catalogue;
+    }
+
+    async searchCatalogueortitle(subject: string, title: string) {
+        const findboth = await this.prisma.post.findMany({
+            where: {
+                Catalogue_name: {
+                    contains: subject,
+                    mode: "insensitive"
+                },
+                Name: {
+                    contains: title,
+                    mode: "insensitive"
+                }
+            },
+        })
+
+        if (!findboth) {
+            throw new HttpException("No Result Found!", HttpStatus.NOT_FOUND);
+        }
+
+        return findboth;
+    }
+
+    async postcatalogue(Catalogue: string) {
+        const postcatalogue = this.prisma.catalogue.create({
+            data: {
+                Catalogue: Catalogue
+            },
+        })
+
+        return postcatalogue;
     }
 }
