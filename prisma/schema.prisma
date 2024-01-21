@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id         Int      @id @default(autoincrement())
-  Enrollment Int      @unique
+  Enrollment String      @unique
   password   String
   Collage    String
   Dgree      String

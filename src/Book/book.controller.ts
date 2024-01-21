@@ -4,7 +4,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { BookService } from './book.service';
 import { CreatePostArgs } from './dto/create-post.args';
-import { authGuard } from 'src/auth/guard';
+import { JwtAuthGuard, authGuard } from 'src/auth/guard';
 import { prismaservice } from 'src/prisma/prisma.service';
 import { Subjectdto } from './dto/subject-find.dto';
 import { query } from 'express';
@@ -26,12 +26,13 @@ const storage = diskStorage({
 export class BookController {
     constructor(private bookService: BookService, private prisma: prismaservice) { }
 
-    @UseGuards(authGuard)
+    @UseGuards(JwtAuthGuard)
     @Get("all")
     allBook() {
         return this.bookService.showBooks()
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('post')
     @UseInterceptors(FileInterceptor('pdf', { storage }))
     async postBook(
@@ -49,11 +50,13 @@ export class BookController {
         return { message: 'PDF uploaded and book posted successfully!', pdf: savedPdf };
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('search')
     async searchBooks(@Query('query') query: string) {
         return this.bookService.searchBooks(query);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('subject')
     async searchCatalogue(@Query('subject') subject: string) {
         return this.bookService.searchCatalogue(subject);
@@ -64,6 +67,7 @@ export class BookController {
         return this.bookService.searchallcatalogue();
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get('find')
     async searchCatalogueortitle(
         @Query("subject") subject: string,
@@ -72,6 +76,7 @@ export class BookController {
         return this.bookService.searchCatalogueortitle(subject, title);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post("Catalogue")
     async postcatalogue(@Body("Catalogue") Catalogue: string) {
         return this.bookService.postcatalogue(Catalogue);

@@ -10,6 +10,7 @@ export class authservice {
 
     async loginUser(user: any): Promise<any> {
         return {
+            role: user.Role,
             token: this.jwt.sign({
                 enrollment_no: user.Enrollment,
                 sub: user.id
