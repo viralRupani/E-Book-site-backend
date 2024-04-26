@@ -24,7 +24,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
             const { password, ...result } = user;
             return result;
         } else {
-            throw new NotFoundException()
+            throw new UnauthorizedException()
         }
     }
 }
